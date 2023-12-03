@@ -1,6 +1,3 @@
-from shared.shared import input_lines_to_list
-
-
 def transform_words_to_numbers(string: str) -> list:
   translation_dict_list = [
     ("one", "o1e"),
@@ -29,6 +26,11 @@ def calibration_value_sum(list: [str]) -> int:
 
 def calibration_value_sum_two(list: [str]) -> int:
   return calibration_value_sum([transform_words_to_numbers(item) for item in list])
+
+def input_lines_to_list(file_name):
+  with open(file_name) as f:
+      lines = f.readlines()
+  return [x.strip() for x in lines]
 
 def main():
   print("Day 1")
