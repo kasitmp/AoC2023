@@ -1,2 +1,5 @@
 pytest
 ruff
+
+python-dotenv
+requests

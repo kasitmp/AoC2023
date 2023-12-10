@@ -15,3 +15,10 @@ Usually TDD, but sometimes if I'm in a hurry I do an experiment and don't look b
 # Run Solution
 Example for day one:
 `cd aoc_1 && python aoc_1.py`
+
+# Script to create new day and pull input.txt
+Extract session cookie from Advent Of Code website after being logged in.
+`cp .env.example .env`
+Store session cookie in .env file in root directory.
+`python init_day.py`
+Wait for prompt and enter a day between 1 and 25.
