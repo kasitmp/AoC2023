@@ -54,3 +54,6 @@ db
 
 uc_architecture_threats/render_output/*.puml
 uc_architecture_threats/render_output/*.png
+
+# Ignore Advent Of Code input fils as requested by AoC
+input.txt
