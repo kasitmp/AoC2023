@@ -38,59 +38,59 @@ class MapService:
       return Node(
         self._get_value_for_coords((1, max_y_index)),
         (1, max_y_index),
-          prev=node,
-        )
+        prev=node,
+      )
     if node.coords == (max_x_index, 0):
       return Node(
         self._get_value_for_coords((max_x_index - 1, 0)),
         (max_x_index - 1, 0),
-          prev=node,
-        )
+        prev=node,
+      )
     if node.coords == (max_x_index, max_y_index):
       return Node(
         self._get_value_for_coords((max_x_index - 1, max_y_index)),
         (max_x_index - 1, max_y_index),
-          prev=node,
-        )
+        prev=node,
+      )
 
     if self.map[node.coords[0] - 1][node.coords[1]] in ["7", "|", "F"]:
       return Node(
         self._get_value_for_coords((node.coords[0] - 1, node.coords[1])),
         (node.coords[0] - 1, node.coords[1]),
         prev=node,
-        )
+      )
     if self.map[node.coords[0]][node.coords[1] + 1] in ["J", "-", "7"]:
       return Node(
         self._get_value_for_coords((node.coords[0], node.coords[1] + 1)),
         (node.coords[0], node.coords[1] + 1),
         prev=node,
-        )
+      )
     if self.map[node.coords[0] + 1][node.coords[1]] in ["J", "|", "L"]:
       return Node(
         self._get_value_for_coords((node.coords[0] + 1, node.coords[1])),
         (node.coords[0] + 1, node.coords[1]),
         prev=node,
-        )
+      )
     if self.map[node.coords[0]][node.coords[1] - 1] in ["L", "-", "F"]:
       return Node(
         self._get_value_for_coords((node.coords[0], node.coords[1] - 1)),
         (node.coords[0], node.coords[1] - 1),
-          prev=node,
-        )
+        prev=node,
+      )
 
   def _get_next_node_for_l(self, node: Node) -> Node:
     if node.prev.coords[1] == node.coords[1] + 1:
       return Node(
         self._get_value_for_coords((node.coords[0] - 1, node.coords[1])),
         (node.coords[0] - 1, node.coords[1]),
-          prev=node,
-        )
+        prev=node,
+      )
     if node.prev.coords[0] == node.coords[0] - 1:
       return Node(
         self._get_value_for_coords((node.coords[0], node.coords[1] + 1)),
-          (node.coords[0], node.coords[1] + 1),
-          prev=node,
-        )
+        (node.coords[0], node.coords[1] + 1),
+        prev=node,
+      )
 
   def _get_next_node_for_pipe(self, node: Node) -> Node:
     if node.prev.coords[0] == node.coords[0] - 1:
@@ -98,13 +98,13 @@ class MapService:
         self._get_value_for_coords((node.coords[0] + 1, node.coords[1])),
         (node.coords[0] + 1, node.coords[1]),
         prev=node,
-        )
+      )
     if node.prev.coords[0] == node.coords[0] + 1:
       return Node(
         self._get_value_for_coords((node.coords[0] - 1, node.coords[1])),
         (node.coords[0] - 1, node.coords[1]),
         prev=node,
-        )
+      )
 
   def _get_next_node_for_dash(self, node: Node) -> Node:
     if node.prev.coords[1] == node.coords[1] - 1:
@@ -112,13 +112,13 @@ class MapService:
         self._get_value_for_coords((node.coords[0], node.coords[1] + 1)),
         (node.coords[0], node.coords[1] + 1),
         prev=node,
-        )
+      )
     if node.prev.coords[1] == node.coords[1] + 1:
       return Node(
         self._get_value_for_coords((node.coords[0], node.coords[1] - 1)),
         (node.coords[0], node.coords[1] - 1),
         prev=node,
-        )
+      )
 
   def _get_next_node_for_f(self, node: Node) -> Node:
     if node.prev.coords[0] == node.coords[0] + 1:
@@ -160,7 +160,7 @@ class MapService:
         self._get_value_for_coords((node.coords[0] - 1, node.coords[1])),
         (node.coords[0] - 1, node.coords[1]),
         prev=node,
-        )
+      )
 
   def _get_next_node_for_node(self, node: Node) -> Node:
     if node.value == "S":
@@ -209,7 +209,9 @@ class EnhancedMapService(MapService):
 
   def _generate_enhanced_map(self):
     current_node = self.start_node
-    self.enhanced_map[current_node.coords[0]][current_node.coords[1]] = current_node
+    self.enhanced_map[current_node.coords[0]][
+      current_node.coords[1]
+    ] = current_node
     next_node = self._get_next_node_for_node(current_node)
     while next_node.value != "S":
       current_node = next_node
@@ -227,7 +229,7 @@ class EnhancedMapService(MapService):
     if self.start_node.coords[0] - 1 >= 0:
       top = self._get_value_for_coords(
         (self.start_node.coords[0] - 1, self.start_node.coords[1])
-        )
+      )
     if self.start_node.coords[1] + 1 < len(self.enhanced_map[0]):
       right = self._get_value_for_coords(
         (self.start_node.coords[0], self.start_node.coords[1] + 1)
@@ -270,27 +272,35 @@ class EnhancedMapService(MapService):
       for element in row:
         if isinstance(element, Node):
           if (
-            element.value == "|" or element.value == "S" and self._get_s_value() == "|"
-            ):
+            element.value == "|"
+            or element.value == "S"
+            and self._get_s_value() == "|"
+          ):
             is_in = not is_in
           if last_angle is None and element.value in ["L", "J", "7", "F"]:
             last_angle = element.value
           if (
-            last_angle == "L" and (
+            last_angle == "L"
+            and (
               element.value == "7" or element.value == "S" and s_value == "7"
-              )
-            or last_angle == "F" and (
+            )
+            or last_angle == "F"
+            and (
               element.value == "J" or element.value == "S" and s_value == "J"
-              )
+            )
           ):
             is_in = not is_in
             last_angle = None
 
           if (
-            last_angle == "L" and (
-              element.value == "J" or element.value == "S" and s_value == "J")
-            or last_angle == "F" and (
-              element.value == "7" or element.value == "S" and s_value == "7")
+            last_angle == "L"
+            and (
+              element.value == "J" or element.value == "S" and s_value == "J"
+            )
+            or last_angle == "F"
+            and (
+              element.value == "7" or element.value == "S" and s_value == "7"
+            )
           ):
             last_angle = None
         else:

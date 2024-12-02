@@ -1,3 +1,21 @@
+exclude = [
+    ".git",
+    ".ruff_cache",
+    ".vscode",
+    "__pycache__",
+    ".pytest_cache",
+    "__pypackages__",
+    "_build",
+    "buck-out",
+    "build",
+    "venv",
+    ".env"
+]
+
+
+line-length = 80
+indent-width = 2
+
 [lint]
 select = [
     # pycodestyle
